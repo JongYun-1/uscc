@@ -1,0 +1,47 @@
+// liveness06.usc
+// Jianping Zeng (zeng207@purdue.edu)
+// Test for liveness analysis.
+//---------------------------------------------------------
+ 
+void bar()
+{
+    int i;
+    int a;
+    int b;
+    int c;
+    int d;
+    int x;
+    int y;
+    int z;
+    i = 1;
+    while (i < 100)
+    {
+        a = 2;
+        c = 4;
+        if (a < c)
+        {
+            b = 2;
+            c = b + c;
+            d = 5;
+        }
+        else
+        {
+            a = a + b;
+            d = a + d;
+            if (a < d)
+            {
+                d = d + 1;
+            }
+            else
+            {
+                c = c + 1;
+            }
+            b = c + d;
+        }
+
+        y = a + b;
+        z = c + d;
+        i = i + 1;
+    }
+    return;
+}

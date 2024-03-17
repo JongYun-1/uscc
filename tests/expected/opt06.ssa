@@ -1,0 +1,53 @@
+; ModuleID = 'main'
+
+@.str = private unnamed_addr constant [4 x i8] c"%c\0A\00"
+@.str1 = private unnamed_addr constant [12 x i8] c"Outer loop\0A\00"
+@.str2 = private unnamed_addr constant [13 x i8] c"HELLO WORLD!\00"
+
+declare i32 @printf(i8*, ...)
+
+define i32 @main() {
+entry:
+  %str = alloca [13 x i8], align 8
+  %0 = getelementptr inbounds [13 x i8]* %str, i32 0, i32 0
+  call void @llvm.memcpy.p0i8.p0i8.i64(i8* %0, i8* getelementptr inbounds ([13 x i8]* @.str2, i32 0, i32 0), i64 13, i32 1, i1 false)
+  %1 = getelementptr inbounds i8* %0, i32 0
+  %2 = load i8* %1
+  br label %while.cond
+
+while.cond:                                       ; preds = %while.end5, %entry
+  %Phi = phi i32 [ %dec12, %while.end5 ], [ 5, %entry ]
+  %Phi10 = phi i32 [ %Phi2, %while.end5 ], [ 2, %entry ]
+  %gt = icmp sgt i32 %Phi, 0
+  br i1 %gt, label %while.body, label %while.end
+
+while.body:                                       ; preds = %while.cond
+  %3 = call i32 (i8*, ...)* @printf(i8* getelementptr inbounds ([12 x i8]* @.str1, i32 0, i32 0))
+  br label %while.cond1
+
+while.end:                                        ; preds = %while.cond
+  ret i32 0
+
+while.cond1:                                      ; preds = %while.body4, %while.body
+  %Phi2 = phi i32 [ %dec, %while.body4 ], [ %Phi10, %while.body ]
+  %gt3 = icmp sgt i32 %Phi2, 0
+  br i1 %gt3, label %while.body4, label %while.end5
+
+while.body4:                                      ; preds = %while.cond1
+  %conv = sext i8 %2 to i32
+  %add = add i32 %conv, 32
+  %conv7 = trunc i32 %add to i8
+  %conv8 = sext i8 %conv7 to i32
+  %4 = call i32 (i8*, ...)* @printf(i8* getelementptr inbounds ([4 x i8]* @.str, i32 0, i32 0), i32 %conv8)
+  %dec = sub i32 %Phi2, 1
+  br label %while.cond1
+
+while.end5:                                       ; preds = %while.cond1
+  %dec12 = sub i32 %Phi, 1
+  br label %while.cond
+}
+
+; Function Attrs: nounwind
+declare void @llvm.memcpy.p0i8.p0i8.i64(i8* nocapture, i8* nocapture readonly, i64, i32, i1) #0
+
+attributes #0 = { nounwind }

@@ -1,0 +1,14 @@
+// dce03.usc
+// Jianping Zeng (zeng207@purdue.edu)
+// Test for dead code elimination.
+//---------------------------------------------------------
+ 
+int bar(int N) {
+    int res = 0; // dead code
+    int i = 0;
+    while (i < N) {
+        res = i + N; // dead code
+        i = i + 1;
+    }
+    return 0;
+}

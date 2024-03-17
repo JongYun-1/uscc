@@ -1,0 +1,17 @@
+// liveness04.usc
+// Jianping Zeng (zeng207@purdue.edu)
+// Test for liveness analysis.
+//---------------------------------------------------------
+ 
+int main() {
+	int a;
+	int b;
+	int c;
+	a = 5;
+	b = a * 2;
+	c = a + b;
+	c = a * 6;
+	printf("c: %d\n", c);
+	return 0;
+}
+ 

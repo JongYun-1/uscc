@@ -1,0 +1,25 @@
+; ModuleID = 'main'
+
+define i32 @bar(i32 %N) {
+entry:
+  %i.addr = alloca i32
+  %N.addr = alloca i32
+  store i32 %N, i32* %N.addr
+  store i32 5, i32* %i.addr
+  %N1 = load i32* %N.addr
+  %i = load i32* %i.addr
+  %gt = icmp sgt i32 %i, %N1
+  br i1 %gt, label %if.then, label %if.else
+
+if.then:                                          ; preds = %entry
+  br label %if.end
+
+if.end:                                           ; preds = %if.then, %if.else
+  %N6 = load i32* %N.addr
+  %i7 = load i32* %i.addr
+  %add8 = add i32 %i7, %N6
+  ret i32 %add8
+
+if.else:                                          ; preds = %entry
+  br label %if.end
+}

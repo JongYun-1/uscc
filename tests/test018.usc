@@ -1,0 +1,36 @@
+// Test018.usc
+// Tests declaring functions that take
+// in arrays as arguments
+//---------------------------------------------------------
+// Copyright (c) 2014, Sanjay Madhav
+// All rights reserved.
+//
+// This file is distributed under the BSD license.
+// See LICENSE.TXT for details.
+//---------------------------------------------------------
+
+void print1()
+{
+	int arr[3];
+	arr[0] = 1;
+	arr[1] = 2;
+	arr[2] = 3;
+
+	printf("%d\n", arr[0]);
+	printf("%d\n", arr[1]);
+	printf("%d\n", arr[2]);
+}
+
+void print2(int a, int b)
+{
+    return a * b;
+}
+
+int main()
+{
+	int x = 15;
+	int y = 3;
+	print1();
+	print2(x, y);
+	return 0;
+}

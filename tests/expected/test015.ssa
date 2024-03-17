@@ -1,0 +1,18 @@
+; ModuleID = 'main'
+
+@.str = private unnamed_addr constant [12 x i8] c"5 * 6 = %d\0A\00"
+
+declare i32 @printf(i8*, ...)
+
+define i32 @multiply(i32 %x, i32 %y) {
+entry:
+  %mul = mul i32 %x, %y
+  ret i32 %mul
+}
+
+define i32 @main() {
+entry:
+  %call = call i32 @multiply(i32 5, i32 6)
+  %0 = call i32 (i8*, ...)* @printf(i8* getelementptr inbounds ([12 x i8]* @.str, i32 0, i32 0), i32 %call)
+  ret i32 0
+}

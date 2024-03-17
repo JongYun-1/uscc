@@ -1,0 +1,32 @@
+********** Live-in/Live-out information **********
+********** Function: bar, analysis iterates 2 times
+entry:
+  IN: b d
+  OUT: b d i
+while.cond:
+  IN: b d i
+  OUT: b d i
+while.body:
+  IN: b d i
+  OUT: a b c d i
+while.end:
+  IN:
+  OUT:
+if.then:
+  IN: a c i
+  OUT: a b c d i
+if.end:
+  IN: a b c d i
+  OUT: b d i
+if.else:
+  IN: a b c d i
+  OUT: a c d i
+if.then8:
+  IN: a c d i
+  OUT: a c d i
+if.end9:
+  IN: a c d i
+  OUT: a b c d i
+if.else10:
+  IN: a c d i
+  OUT: a c d i

@@ -1,0 +1,59 @@
+Program:
+---Function: void print1
+------CompoundStmt:
+---------Decl: int[3] arr
+---------AssignArrayStmt:
+------------ArraySub: arr
+---------------ConstantExpr: 0
+------------ConstantExpr: 1
+---------AssignArrayStmt:
+------------ArraySub: arr
+---------------ConstantExpr: 1
+------------ConstantExpr: 2
+---------AssignArrayStmt:
+------------ArraySub: arr
+---------------ConstantExpr: 2
+------------ConstantExpr: 3
+---------ExprStmt
+------------FuncExpr: printf
+---------------StringExpr: %d
+
+---------------ArrayExpr: 
+------------------ArraySub: arr
+---------------------ConstantExpr: 0
+---------ExprStmt
+------------FuncExpr: printf
+---------------StringExpr: %d
+
+---------------ArrayExpr: 
+------------------ArraySub: arr
+---------------------ConstantExpr: 1
+---------ExprStmt
+------------FuncExpr: printf
+---------------StringExpr: %d
+
+---------------ArrayExpr: 
+------------------ArraySub: arr
+---------------------ConstantExpr: 2
+---Function: void print2
+------ArgDecl: int a
+------ArgDecl: int b
+------CompoundStmt:
+---------ReturnStmt:
+------------BinaryMath *:
+---------------IdentExpr: a
+---------------IdentExpr: b
+---Function: int main
+------CompoundStmt:
+---------Decl: int x
+------------ConstantExpr: 15
+---------Decl: int y
+------------ConstantExpr: 3
+---------ExprStmt
+------------FuncExpr: print1
+---------ExprStmt
+------------FuncExpr: print2
+---------------IdentExpr: x
+---------------IdentExpr: y
+---------ReturnStmt:
+------------ConstantExpr: 0

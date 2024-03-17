@@ -1,0 +1,101 @@
+; ModuleID = 'main'
+
+@.str = private unnamed_addr constant [4 x i8] c"%s\0A\00"
+@.str1 = private unnamed_addr constant [36 x i8] c"thequickbrownfoxjumpsoverthelazydog\00"
+
+declare i32 @printf(i8*, ...)
+
+define i32 @partition(i8* %array, i32 %left, i32 %right, i32 %pivotIdx) {
+entry:
+  %0 = getelementptr inbounds i8* %array, i32 %pivotIdx
+  %1 = load i8* %0
+  %2 = getelementptr inbounds i8* %array, i32 %pivotIdx
+  %3 = load i8* %2
+  %4 = getelementptr inbounds i8* %array, i32 %right
+  %5 = load i8* %4
+  %6 = getelementptr inbounds i8* %array, i32 %pivotIdx
+  store i8 %5, i8* %6
+  %7 = getelementptr inbounds i8* %array, i32 %right
+  store i8 %3, i8* %7
+  br label %while.cond
+
+while.cond:                                       ; preds = %if.end, %entry
+  %Phi1 = phi i32 [ %inc8, %if.end ], [ %left, %entry ]
+  %Phi6 = phi i32 [ %Phi9, %if.end ], [ %left, %entry ]
+  %lt = icmp slt i32 %Phi1, %right
+  br i1 %lt, label %while.body, label %while.end
+
+while.body:                                       ; preds = %while.cond
+  %conv = sext i8 %1 to i32
+  %8 = getelementptr inbounds i8* %array, i32 %Phi1
+  %9 = load i8* %8
+  %conv4 = sext i8 %9 to i32
+  %lt5 = icmp slt i32 %conv4, %conv
+  br i1 %lt5, label %if.then, label %if.end
+
+while.end:                                        ; preds = %while.cond
+  %10 = getelementptr inbounds i8* %array, i32 %Phi6
+  %11 = load i8* %10
+  %12 = getelementptr inbounds i8* %array, i32 %right
+  %13 = load i8* %12
+  %14 = getelementptr inbounds i8* %array, i32 %Phi6
+  store i8 %13, i8* %14
+  %15 = getelementptr inbounds i8* %array, i32 %right
+  store i8 %11, i8* %15
+  ret i32 %Phi6
+
+if.then:                                          ; preds = %while.body
+  %16 = getelementptr inbounds i8* %array, i32 %Phi1
+  %17 = load i8* %16
+  %18 = getelementptr inbounds i8* %array, i32 %Phi6
+  %19 = load i8* %18
+  %20 = getelementptr inbounds i8* %array, i32 %Phi1
+  store i8 %19, i8* %20
+  %21 = getelementptr inbounds i8* %array, i32 %Phi6
+  store i8 %17, i8* %21
+  %inc = add i32 %Phi6, 1
+  br label %if.end
+
+if.end:                                           ; preds = %if.then, %while.body
+  %Phi9 = phi i32 [ %inc, %if.then ], [ %Phi6, %while.body ]
+  %inc8 = add i32 %Phi1, 1
+  br label %while.cond
+}
+
+define void @quicksort(i8* %array, i32 %left, i32 %right) {
+entry:
+  %lt = icmp slt i32 %left, %right
+  br i1 %lt, label %if.then, label %if.end
+
+if.then:                                          ; preds = %entry
+  %sub = sub i32 %right, %left
+  %div = sdiv i32 %sub, 2
+  %add = add i32 %left, %div
+  %0 = getelementptr inbounds i8* %array, i32 0
+  %call = call i32 @partition(i8* %0, i32 %left, i32 %right, i32 %add)
+  %1 = getelementptr inbounds i8* %array, i32 0
+  %sub1 = sub i32 %call, 1
+  call void @quicksort(i8* %1, i32 %left, i32 %sub1)
+  %2 = getelementptr inbounds i8* %array, i32 0
+  %add2 = add i32 %call, 1
+  call void @quicksort(i8* %2, i32 %add2, i32 %right)
+  br label %if.end
+
+if.end:                                           ; preds = %if.then, %entry
+  ret void
+}
+
+define i32 @main() {
+entry:
+  %letters = alloca [36 x i8], align 8
+  %0 = getelementptr inbounds [36 x i8]* %letters, i32 0, i32 0
+  call void @llvm.memcpy.p0i8.p0i8.i64(i8* %0, i8* getelementptr inbounds ([36 x i8]* @.str1, i32 0, i32 0), i64 36, i32 1, i1 false)
+  call void @quicksort(i8* %0, i32 0, i32 34)
+  %1 = call i32 (i8*, ...)* @printf(i8* getelementptr inbounds ([4 x i8]* @.str, i32 0, i32 0), i8* %0)
+  ret i32 0
+}
+
+; Function Attrs: nounwind
+declare void @llvm.memcpy.p0i8.p0i8.i64(i8* nocapture, i8* nocapture readonly, i64, i32, i1) #0
+
+attributes #0 = { nounwind }

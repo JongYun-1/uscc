@@ -1,0 +1,10 @@
+// dce01.usc
+// Jianping Zeng (zeng207@purdue.edu)
+// Test for dead code elimination.
+//---------------------------------------------------------
+
+void foo(int x) {
+	int y = 0; // useless
+	x = y / 3; // useless
+}
+

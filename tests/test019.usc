@@ -1,0 +1,43 @@
+// Test019.usc
+// Tests declaring functions that take
+// in arrays as arguments
+//---------------------------------------------------------
+// Copyright (c) 2014, Sanjay Madhav
+// All rights reserved.
+//
+// This file is distributed under the BSD license.
+// See LICENSE.TXT for details.
+//---------------------------------------------------------
+
+int print_mult(int a, int b)
+{
+    int value = a * b;
+	printf("%d\n", value);
+    return value;
+}
+
+void print2() {
+	int arr[3];
+	arr[0] = 1;
+	arr[1] = 2;
+	arr[2] = 3;
+
+	printf("%d\n", arr[0]);
+	printf("%d\n", arr[1]);
+	printf("%d", arr[2]);
+}
+
+void print1(int a, int b)
+{
+    int mult = print_mult(a, b);
+	printf("%d\n", mult);
+    print2();
+}
+
+int main()
+{
+	int x = 50;
+	int y = 2;
+	print1(x, y);
+	return 0;
+}

@@ -1,0 +1,17 @@
+// dce02.usc
+// Jianping Zeng (zeng207@purdue.edu)
+// Test for dead code elimination.
+//---------------------------------------------------------
+ 
+int main() {
+	int a;
+	int b;
+	int c;
+	a = 5;
+	b = a * 2;        // useless
+	c = a + b;        // useless
+	c = a * 6;
+	printf("c: %d\n", c);
+	return 0;
+}
+ 
