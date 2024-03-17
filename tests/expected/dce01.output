@@ -1,6 +1,0 @@
-; ModuleID = 'main'
-
-define void @foo(i32 %x) {
-entry:
-  ret void
-}

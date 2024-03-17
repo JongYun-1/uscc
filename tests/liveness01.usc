@@ -1,8 +1,0 @@
-// liveness01.usc
-// Jianping Zeng (zeng207@purdue.edu)
-// Test for liveness analysis.
-//---------------------------------------------------------
- 
-int add(int a, int b) {
-    return a + b;
-}
